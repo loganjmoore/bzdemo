@@ -17,15 +17,28 @@ require_once('config.php');
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="style.css" />
 
 
 </head>
 
 <body>
 
-<form action="process.php" method="post" enctype="multipart/form-data">
-    <input type="file" name="csv" />
-    <input type="submit" value="Upload" />
+<form action="process.php" id="uploader" method="post" enctype="multipart/form-data">
+<!--    <input type="file" name="csv" />-->
+<!--    <input type="submit" value="Upload" />-->
+
+    <div class="element">
+        <i id="select" class="fa fa-sticky-note"></i><span class="name">No file selected</span>
+        <input type="file" id="thefile" name="csv">
+    </div>
+
+    <div class="element">
+        <i id="submitButton" class="fa fa-upload"></i>
+    </div>
+
+
 </form>
 
 <hr />
@@ -52,8 +65,20 @@ require_once('config.php');
                     },
                     dataType: 'html'
                 });
-
             });
+
+        $("#select").click(function () {
+            $("input[type='file']").trigger('click');
+        });
+
+        $('input[type="file"]').on('change', function() {
+            $(this).siblings('span').text($('input[type=file]').val().split('\\').pop());
+        })
+
+        $( "#submitButton" ).click(function() {
+            $( "#uploader" ).submit();
+        });
+
     });
 </script>
 

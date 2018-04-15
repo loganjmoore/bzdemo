@@ -1,0 +1,30 @@
+body{
+    background-color:#FFFFFF;
+    font-family: Verdana, Arial, Tahoma;
+}
+
+.element {
+    display: inline-flex;
+    align-items: center;
+}
+i.fa-sticky-note {
+    margin: 10px;
+    cursor: pointer;
+    font-size: 30px;
+}
+i.fa-upload {
+    margin: 10px;
+    cursor: pointer;
+    font-size: 30px;
+}
+i:hover {
+    opacity: 0.6;
+}
+#thefile {
+    display: none;
+}
+
+
+#submitButton {
+    font-family: FontAwesome;
+}
