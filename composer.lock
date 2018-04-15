@@ -1,0 +1,66 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "b3070eb1de19e945dacdafde400bd6f7",
+    "packages": [
+        {
+            "name": "slince/upload",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/slince/upload.git",
+                "reference": "c54fd3a835b8820fa79201631a159b6a906a7c26"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/slince/upload/zipball/c54fd3a835b8820fa79201631a159b6a906a7c26",
+                "reference": "c54fd3a835b8820fa79201631a159b6a906a7c26",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0"
+            },
+            "suggest": {
+                "ext-fileinfo": "More accurately detect the file mimetype"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Slince\\Upload\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "tao",
+                    "email": "taosikai@yeah.net"
+                }
+            ],
+            "description": "Process file uploads with multiple and extensible validation rules",
+            "keywords": [
+                "file",
+                "file upload",
+                "upload",
+                "validation"
+            ],
+            "time": "2017-05-05T13:50:42+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

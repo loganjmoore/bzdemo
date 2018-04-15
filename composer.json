@@ -1,0 +1,5 @@
+{
+  "require": {
+    "slince/upload": "^1.0"
+  }
+}
