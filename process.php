@@ -13,6 +13,8 @@ use Slince\Upload\FileInfo;
 use League\Csv\Reader;
 use League\Csv\Statement;
 
+$dbh = new dbhelper();
+
 //Process the file data
 $uploader = new Uploader('./files');
 $uploader->setRandName(true);
@@ -34,11 +36,67 @@ try {
         $header = $records->getHeader();
         $header_key = trim($header[0]);
 
-        echo "<b>Header Key is:</b> $header_key <br />";
-
-        foreach($records as $record)
+        switch($header_key)
         {
-            echo json_encode($record)."<hr />";
+            case "person_id":
+
+                foreach($records as $record){
+
+                    $params=null;
+                    $params[1]=$record["person_id"];
+                    $person_exists=$dbh->pGetScalar("SELECT count(1) FROM people WHERE person_id = ?",$params,0);
+
+                    $params=null;
+                    $params[1]=$record["person_id"];
+                    $params[2]=$record["first_name"];
+                    $params[3]=$record["last_name"];
+                    $params[4]=$record["email_address"];
+                    $params[5]=$record["group_id"];
+                    $params[6]=$record["state"];
+                    $params[7]=time();
+
+                    if($person_exists===0) {
+                        $dbh->pq("INSERT INTO people (person_id,first_name,last_name,email_address,group_id,state,date_modified) VALUES(?,?,?,?,?,?,?)", $params);
+                    }else{
+                        $params[8]=$record["person_id"];
+                        $dbh->pq("UPDATE people SET person_id = ?, first_name = ?, last_name = ?, email_address = ?, group_id = ?, state = ?, date_modified = ? WHERE person_id = ?", $params);
+                    }
+
+                }
+                unlink($fileInfo->getPath());
+                header("Location: index.php");
+                exit;
+                break;
+
+            case "group_id":
+
+                foreach($records as $record){
+
+                    $params=null;
+                    $params[1]=$record["group_id"];
+                    $group_exists=$dbh->pGetScalar("SELECT count(1) FROM groups WHERE group_id = ?", $params,0);
+
+                    $params=null;
+                    $params[1]=$record["group_id"];
+                    $params[2]=$record["group_name"];
+                    $params[3]=time();
+
+                    if($group_exists===0) {
+                        $dbh->pq("INSERT INTO groups (group_id,group_name,date_modified) VALUES(?,?,?);", $params);
+                    }else{
+                        $params[4]=$record["group_id"];
+                        $dbh->pq("UPDATE groups SET group_id = ?, group_name = ?, date_modified = ? WHERE group_id = ?", $params);
+                    }
+                }
+                unlink($fileInfo->getPath());
+                header("Location: index.php");
+                exit;
+                break;
+
+            default:
+                header("Location:index.php");
+                exit;
+                break;
         }
 
     }
