@@ -1,5 +1,6 @@
 {
   "require": {
-    "slince/upload": "^1.0"
+    "slince/upload": "^1.0",
+    "league/csv": "9.0"
   }
 }
