@@ -16,3 +16,4 @@ $db = new PDO("mysql:host=$dbhost;dbname=".$dbname, $dbuser, $dbpass);
 //required libraries
 require_once 'vendor/autoload.php';
 require_once 'dbhelper.php';
+require_once 'validator.php';

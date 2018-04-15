@@ -14,6 +14,7 @@ use League\Csv\Reader;
 use League\Csv\Statement;
 
 $dbh = new dbhelper();
+$validator =  new RecordValidator();
 
 //Process the file data
 $uploader = new Uploader('./files');
@@ -41,6 +42,11 @@ try {
             case "person_id":
 
                 foreach($records as $record){
+
+                    if(!$validator->ValidatePerson($record)) {
+                        echo $validator->errorMsg."<br /> Records previous to this were imported, however this must be resolved before the rest can be uploaded. You may simply make the correction and upload again, we will update existing records but not add them as duplicates.";
+                        exit;
+                    }
 
                     $params=null;
                     $params[1]=$record["person_id"];
@@ -71,6 +77,11 @@ try {
             case "group_id":
 
                 foreach($records as $record){
+
+                    if(!$validator->ValidateGroup($record)) {
+                        echo $validator->errorMsg."<br /> Records previous to this were imported, however this must be resolved before the rest can be uploaded. You may simply make the correction and upload again, we will update existing records but not add them as duplicates.";
+                        exit;
+                    }
 
                     $params=null;
                     $params[1]=$record["group_id"];

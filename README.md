@@ -5,5 +5,7 @@ One should be called people and the other groups.
 
 Composer
 ------------------------------------------------------------------------
-I have pulled in a php file upload library via composer.
-
+I have pulled in a few different libraries via composer such as:
+slince/upload for handling file uploads
+league/csv for parsing csv files
+phpunit/phpunit for unit testing
