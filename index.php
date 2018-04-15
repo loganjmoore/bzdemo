@@ -15,6 +15,8 @@ require_once('config.php');
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
 
 
 </head>
@@ -28,53 +30,30 @@ require_once('config.php');
 
 <hr />
 
+<?php require_once('groups.php'); ?>
+
 <div id="results">
-    <table id="people_table" class="display">
-        <thead>
-        <tr>
-            <th>Person Id</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Group Id</th>
-            <th>State</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        <?php
-
-        $dbh = new dbhelper();
-        $params=null;
-        $results = $dbh->pGetResults("select person_id, first_name, last_name, email_address, group_id, state, date_modified FROM people", $params);
-
-        foreach($results as $row) {
-
-            $person_id=$row["person_id"];
-            $first_name=$row["first_name"];
-            $last_name=$row["last_name"];
-            $email=$row["email_address"];
-            $group_id=$row["group_id"];
-            $state=$row["state"];
-
-            echo "<tr>
-                      <td>$person_id</td>
-                      <td>$first_name</td>
-                      <td>$last_name</td>
-                      <td>$email</td>
-                      <td>$group_id</td>
-                      <td>$state</td>
-                  </tr>";
-        }
-        ?>
-
-        </tbody>
-    </table>
+    <?php require_once('results.php'); ?>
 </div>
 
 <script>
     $(document).ready( function () {
         $("#people_table").DataTable();
+        $("#selected_group").selectmenu()
+            .on('selectmenuchange', function() {
+
+                var group_id = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: 'results.php?group_id='+group_id,
+                    success: function (data) {
+                        $('#results').html(data);
+                        $("#people_table").DataTable();
+                    },
+                    dataType: 'html'
+                });
+
+            });
     });
 </script>
 
